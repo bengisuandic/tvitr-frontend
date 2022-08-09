@@ -1,0 +1,6 @@
+.tweet-card-bottom{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin: 0 2%;
+}
