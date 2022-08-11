@@ -1,7 +1,7 @@
 import React from "react";
 import { Outlet, Link } from "react-router-dom";
 import AccountBoxIcon from "@mui/icons-material/AccountBox"
-import "./App.css";
+import "./styles/App.css";
 
 function App() {
   return (
