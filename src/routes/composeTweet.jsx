@@ -39,7 +39,6 @@ export default function NewTweet() {
           <FormHelperText id="my-helper-text">Shakespeare much?</FormHelperText>
         </FormControl>
       </div>
-      <p>{data}</p>
       <div style={{ margin: "10%" }}>
         <Button onClick={() => handleSubmit({ data })} variant="outlined">
           Publish

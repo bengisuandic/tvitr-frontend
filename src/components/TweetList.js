@@ -1,20 +1,48 @@
 import React from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
 import "../styles/tweetCard.css";
-import { IconButton, Tooltip } from "@mui/material";
-import HeartBrokenIcon from "@mui/icons-material/HeartBroken";
 
-import {
-  Card,
-  CardActions,
-  CardContent,
-  Button,
-  Typography,
-} from "@mui/material";
+import { Link } from "react-router-dom";
 import { purple } from "@mui/material/colors";
+import { IconButton, Tooltip, Modal } from "@mui/material";
+import { Card, CardActions, CardContent, Typography } from "@mui/material";
+import HeartBrokenIcon from "@mui/icons-material/HeartBroken";
+import DeleteIcon from "@mui/icons-material/Delete";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
-//delete tweet req: "http://localhost:3000/users/del/62eb6c472243ec803a341a6d"
+var userId = "62eb67e72243ec803a341a67";
+
+async function deleteTweet(tweetId) {
+  try {
+    return axios
+      .get("http://localhost:3000/users/del/" + tweetId)
+      .then((res) => {
+        console.log("Delete succeed:", res);
+        let tweets = res.data;
+        return tweets;
+      });
+  } catch (error) {
+    console.log("Tweet deletion failed:", error);
+  }
+}
+
+async function likeTweet(tweetId, t) {
+  try {
+    return axios
+      .post("http://localhost:3000/users/likeTweet/" + tweetId)
+      .then((res) => {
+        console.log("Like/unlike succeed:", res);
+        let tweets = [...t];
+        let ts = tweets.findIndex((el) => el._id == res.data._id);
+        tweets[ts] = res.data;
+
+        console.log(ts);
+        return tweets;
+      });
+  } catch (error) {
+    console.log("Tweet like/unlike failed:", error);
+  }
+}
 
 export default class TweetList extends React.Component {
   state = {
@@ -22,14 +50,16 @@ export default class TweetList extends React.Component {
   };
 
   componentDidMount() {
-    
-    if (this.props.inUserProfile === "1"){
-      console.log(this.props.tweets)
-      console.log("hello??")
+    if (this.props.inUserProfile === "1") {
+      console.log(
+        "Tweets list component working with the prop:",
+        this.props.tweets
+      );
+      // console.log("hello??")
       const tweets = this.props.tweets;
       this.setState({ tweets });
-    } else{
-      console.log("axios");
+    } else {
+      console.log("Axios Request");
       axios.get(`http://localhost:3000/tweets/all`).then((res) => {
         const tweets = res.data;
         this.setState({ tweets });
@@ -50,15 +80,54 @@ export default class TweetList extends React.Component {
               styles={{ margin: "0px 0px 0px 10%" }}
             >
               <Link to={{ pathname: `/users/${tweet.user._id}` }}>
-                <Typography color={purple[400]}>
-                  By {tweet.user.name}
-                </Typography>
+                <Tooltip title="Go to user">
+                  <Typography color={purple[400]}>
+                    By {tweet.user.name}
+                  </Typography>
+                </Tooltip>
               </Link>
-              <Tooltip title="Like this tweet">
-                <IconButton>
-                  <HeartBrokenIcon />
-                </IconButton>
-              </Tooltip>
+
+              <div>
+                <span>{tweet.likes.length} likes</span>
+                <Tooltip
+                  title={
+                    tweet.likes.findIndex((el) => el == userId) !== -1
+                      ? "Like"
+                      : "Dislike"
+                  }
+                >
+                  <IconButton
+                    onClick={async () => {
+                      let newList = await likeTweet(
+                        tweet._id,
+                        this.state.tweets
+                      );
+                      this.setState({ tweets: newList });
+                    }}
+                  >
+                    {tweet.likes.findIndex((el) => el == userId) !== -1 ? (
+                      <HeartBrokenIcon />
+                    ) : (
+                      <FavoriteIcon />
+                    )}
+                  </IconButton>
+                </Tooltip>
+
+                {this.props.inMyProfile === "1" ? (
+                  <Tooltip title="Delete this tweet">
+                    <IconButton
+                      onClick={async () => {
+                        let newList = await deleteTweet(tweet._id);
+                        this.setState({ tweets: newList });
+                      }}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </Tooltip>
+                ) : (
+                  <p></p>
+                )}
+              </div>
             </CardActions>
           </Card>
         ))}
