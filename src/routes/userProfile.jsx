@@ -1,27 +1,19 @@
 import React from "react";
 import MyUser from "../components/ProfileUser";
-import { Button, Fab} from "@mui/material";
-import { Link } from "react-router-dom";
-import { blue } from "@mui/material/colors";
-
-const style = {
-  background: "rgb(29, 107, 197)",
-  color: "aliceblue",
-  margin: 0,
-  top: 'auto',
-  right: 20,
-  bottom: 20,
-  left: 'auto',
-  position: 'fixed',
-};
+import Login from "../components/Login";
+//import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 export default function User() {
+  const state = useSelector((state) => state);
+  const myUser = state.userReducer;
+  const myToken = state.tokenReducer;
+  console.log("MYUser:", myUser);
+
   return (
     <main style={{ padding: "1rem 0" }}>
-      <MyUser />
-      <Link to={"/newTweet"}>
-        <Fab variant="extended" style={style}>Compose</Fab>
-      </Link>
+      {myToken === "" ?
+      (<Login />):(<MyUser userId={myUser._id} token={myToken}/>)}
     </main>
   );
 }

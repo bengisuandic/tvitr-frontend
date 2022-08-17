@@ -22,8 +22,9 @@ export default class PersonList extends React.Component {
           <Link to={{ pathname: `/users/${user._id}` }}>
             <Card key={user._id} variant="outlined" sx={{ margin: "2% 8%" }}>
               <CardContent>{user.name}</CardContent>
-              {user.tweets.length > 0 ? (
-                <CardContent>{user.tweets.length} tweets</CardContent>
+              <CardContent>{user.username}</CardContent>
+              {user.tweetCount > 0 ? (
+                <CardContent>{user.tweetCount} tweets</CardContent>
               ) : (
                 <CardContent>No tweets</CardContent>
               )}
