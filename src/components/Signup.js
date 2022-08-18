@@ -30,15 +30,17 @@ const style = {
   alignContent: "center",
   p: 4,
 };
-async function handleSubmit(data) {
+
+async function handleSubmit(data, handleOpen) {
   try {
     if (data.data !== "") {
       console.log(data);
       return axios
         .post("http://localhost:3000/users/signup", data)
         .then((res) => {
-          const composeRes = res;
-          console.log("Login Response:", res);
+          const signupRes = res;
+          console.log("SignUp Response:", signupRes);
+          handleOpen();
         });
     } else {
       throw Error("Bruh");
@@ -53,6 +55,13 @@ export default function Login() {
   var [password, setDataP] = useState("");
   var [name, setDataN] = useState("");
   var [age, setDataA] = useState("");
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => {
+    setOpen(false);
+    window.location.reload();
+  };
 
   return (
     <div style={{ margin: "10%" }}>
@@ -115,7 +124,7 @@ export default function Login() {
         {username !== "" ? (
           <Button
             onClick={() => {
-              handleSubmit({ username, password, name, age });
+              handleSubmit({ username, password, name, age }, handleOpen);
             }}
             variant="contained"
           >
@@ -126,6 +135,36 @@ export default function Login() {
             Please write something..
           </p>
         )}
+      </div>
+      <div>
+        <Modal
+          aria-labelledby="transition-modal-title"
+          aria-describedby="transition-modal-description"
+          open={open}
+          onClose={handleClose}
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 500,
+          }}
+        >
+          <Fade in={open}>
+            <Box sx={style}>
+              <Typography
+                id="transition-modal-title"
+                variant="h6"
+                component="h2"
+              >
+                USER CREATED!
+              </Typography>
+              <Link to={"/myProfile"}>
+                <Button style={{ width: "50%" }} variant="contained">
+                  Go ahead and log in!
+                </Button>
+              </Link>
+            </Box>
+          </Fade>
+        </Modal>
       </div>
     </div>
   );

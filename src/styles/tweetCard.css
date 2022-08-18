@@ -4,3 +4,20 @@
     flex-wrap: wrap;
     margin: 0 2%;
 }
+
+.profile-upper-card{
+    margin: 0 4% 6%;
+    padding: 20px;
+    align-items: center;
+    display: flex;
+    gap: 100px;
+    flex-wrap: wrap;
+}
+
+.whole-profile{
+    margin: 0 10%;
+    padding-top: 20px;
+    position: relative;
+    height: 100vh;
+    background-color: rgb(227, 240, 255);
+}

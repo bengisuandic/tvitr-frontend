@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import TweetList from "./TweetList";
+import Logout from "./Logout";
 
 export default class MyUser extends React.Component {
   state = {
@@ -8,7 +9,8 @@ export default class MyUser extends React.Component {
       tweets: [],
     },
   };
-  //DÜZELT BURALARI HEP alooo
+
+  
   componentDidMount() {
     try {
       axios.get("http://localhost:3000/users/singleUser/" + this.props.userId).then((res) => {
@@ -20,7 +22,7 @@ export default class MyUser extends React.Component {
       console.log(error);
     }
   }
-
+  
   render() {
     return (
       <div>
@@ -36,7 +38,8 @@ export default class MyUser extends React.Component {
           </>
         ) : (
           <p>You have no tweets yet</p>
-        )}
+          )}
+        <Logout />
       </div>
     );
   }

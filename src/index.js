@@ -25,10 +25,10 @@ root.render(
           <Route path="/" element={<App />}>
             <Route path="/" element={<Home />} />
             <Route path="users" element={<Users />} />
+            <Route path="signUp" element={<Signup />} />
             <Route path="tweets" element={<Tweets />} />
             <Route path="myProfile" element={<User />} />
             <Route path="newTweet" element={<NewTweet />} />
-            <Route path="signUp" element={<Signup />} />
             <Route path="users/:userId" element={<SingleUserComp />} />
             <Route
               path="*"

@@ -10,6 +10,11 @@ import HeartBrokenIcon from "@mui/icons-material/HeartBroken";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 
+// Okay so, I know this one is pretty complicated for a single component.
+// However, it would not make such a difference if I seperate different tweet 
+// lists or a make single tweet card component. Maybe it would? Idk but this 
+// seems like the most convenient for me to code...
+
 async function deleteTweet(tweetId, token) {
   try {
     console.log(token);
@@ -17,7 +22,7 @@ async function deleteTweet(tweetId, token) {
       .get("http://localhost:3000/tweets/del/" + tweetId, {
         headers: {
           Authorization: "Bearer " + token,
-        }
+        },
       })
       .then((res) => {
         console.log("Delete succeed:", res);
@@ -33,11 +38,15 @@ async function likeTweet(tweetId, t, token) {
   try {
     console.log(token);
     return axios
-      .post("http://localhost:3000/tweets/likeTweet/" + tweetId, {} , {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      })
+      .post(
+        "http://localhost:3000/tweets/likeTweet/" + tweetId,
+        {},
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      )
       .then((res) => {
         console.log("Like/unlike succeed:", res);
         let tweets = [...t];
@@ -59,7 +68,6 @@ export default class TweetList extends React.Component {
 
   componentDidMount() {
     if (this.props.inMyProfile === "1") {
-      //localden fln biyerden çek
       console.log("my profile");
       axios
         .get(`http://localhost:3000/tweets/userTweets/` + this.props.userId)
@@ -70,9 +78,12 @@ export default class TweetList extends React.Component {
         });
     } else if (this.props.inUserProfile === "1") {
       console.log("another profile");
+      console.log("props:", this.props);
       axios
         .get("http://localhost:3000/tweets/userTweets/" + this.props.userId)
         .then((res) => {
+          console.log(res);
+
           const tweets = res.data;
           console.log("Axios tweets:", tweets);
           this.setState({ tweets });
@@ -102,7 +113,7 @@ export default class TweetList extends React.Component {
                 <Link to={{ pathname: `/users/${tweet.user._id}` }}>
                   <Tooltip title="Go to user">
                     <Typography color={purple[400]}>
-                      By {tweet.user.name}
+                      @{tweet.user.username}
                     </Typography>
                   </Tooltip>
                 </Link>
@@ -114,7 +125,8 @@ export default class TweetList extends React.Component {
                 <span>{tweet.likes.length} likes</span>
                 <Tooltip
                   title={
-                    tweet.likes.findIndex((el) => el === this.props.userId) === -1
+                    tweet.likes.findIndex((el) => el === this.props.userId) ===
+                    -1
                       ? "Like"
                       : "Dislike"
                   }
@@ -129,7 +141,8 @@ export default class TweetList extends React.Component {
                       this.setState({ tweets: newList });
                     }}
                   >
-                    {tweet.likes.findIndex((el) => el === this.props.userId) === -1 ? (
+                    {tweet.likes.findIndex((el) => el === this.props.userId) ===
+                    -1 ? (
                       <HeartBrokenIcon />
                     ) : (
                       <FavoriteIcon />
