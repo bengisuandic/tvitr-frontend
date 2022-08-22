@@ -1,13 +1,11 @@
 import React from "react";
 import axios from "axios";
 import { useState } from "react";
-import { store } from "../app/store";
 import { Link } from "react-router-dom";
 import {
   FormControl,
   InputLabel,
   Input,
-  FormHelperText,
   Button,
   Modal,
   Fade,
@@ -158,7 +156,7 @@ export default function Login() {
                 USER CREATED!
               </Typography>
               <Link to={"/myProfile"}>
-                <Button style={{ width: "50%" }} variant="contained">
+                <Button style={{ width: "70%" }} variant="contained">
                   Go ahead and log in!
                 </Button>
               </Link>

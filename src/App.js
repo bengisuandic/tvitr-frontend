@@ -7,8 +7,8 @@ import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import "./styles/App.css";
 
 const style = {
-  background: "rgb(29, 107, 197)",
-  color: "aliceblue",
+  background: "rgb(0, 46, 98)",
+  color: "white",
   margin: 0,
   top: "auto",
   right: "7%",
@@ -27,10 +27,10 @@ function App() {
           <button>Home</button>
         </Link>
         <Link to={"/users"}>
-          <button>All Users</button>
+          <button>Users</button>
         </Link>
         <Link to={"/tweets"}>
-          <button>All Tweets</button>
+          <button>Tweets</button>
         </Link>
         <Link to={"/myProfile"}>
           <button>

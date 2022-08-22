@@ -13,7 +13,7 @@ export const tokenReducer  = (state = default_state_token, action) => {
     }
 }
 
-const default_state_user = {};
+const default_state_user = {_id: '',};
 export const userReducer  = (state = default_state_user, action) => {
     switch (action.type) {
         case SET_USER:

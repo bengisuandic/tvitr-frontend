@@ -11,6 +11,7 @@ import {
   Input,
   Button
 } from "@mui/material";
+import "../styles/cards.css";
 
 // const style = {
 //   position: "absolute",
@@ -56,7 +57,7 @@ export default function Login() {
   var [password, setData1] = useState("");
     
   return (
-    <div style={{ margin: "10%" }}>
+    <div style={{ margin: "5% 10% 5%" }}>
       <div>
         <div style={{ margin: "10%" }}>
           <FormControl style={{ width: "70%" }} required>
@@ -72,8 +73,8 @@ export default function Login() {
           </FormControl>
         </div>
 
-        <div style={{ margin: "10%" }}>
-          <FormControl style={{ width: "70%" }} required>
+        <div style={{ margin: "5% 10% 5%" }} className="signin-form">
+          <FormControl style={{ width: "70%" }} className="signin-form" required>
             <InputLabel htmlFor="my-password">Password</InputLabel>
             <Input
               id="my-password"
@@ -86,9 +87,9 @@ export default function Login() {
           </FormControl>
         </div>
       </div>
-      <div style={{ margin: "0%" }}>
+      <div style={{ margin: "10px" }} >
         {username !== "" ? (
-          <Button
+          <Button className="submit-button"
             onClick={() => {
               handleSubmit({ username, password }, dispatch);
             }}
@@ -103,7 +104,7 @@ export default function Login() {
       </div>
       <Link to={"/signUp"}>
         {" "}
-        <Button> Don't have an acoount? Sign up!</Button>
+        <Button> Don't have an account? Sign up!</Button>
       </Link>
     </div>
   );

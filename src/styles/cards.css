@@ -1,0 +1,64 @@
+.tweet-card-bottom{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin: 0 2%;
+}
+
+.profile-picture-box{
+    overflow: hidden;
+    object-fit: cover;
+    border-radius: 100px;
+    width: 130px;
+    height: 130px;
+}
+
+.profile-upper-card{
+    margin: 0 4% 6%;
+    padding: 20px;
+    align-items: center;
+    justify-content: space-between;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.profile-upper-card-left{
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.profile-upper-card-right{
+    display: flex;
+    align-items:flex-start;
+    flex-wrap: wrap;
+}
+
+.whole-profile{
+    margin: 0 5%;
+    padding-top: 20px;
+    position: relative;
+    height: 100vh;
+    background-color: rgba(163, 179, 198, 0.104);
+}
+
+.signin-form{
+    margin: 0;
+    padding: 0;
+}
+
+.tweet-picture-box{
+    overflow: hidden;
+    object-fit: cover;
+    border-radius: 100px;
+    width: 45px;
+    height: 45px;
+}
+
+.tweet-card-user-info{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    flex-wrap: wrap;
+}
