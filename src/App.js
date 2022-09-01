@@ -11,7 +11,7 @@ const style = {
   color: "white",
   margin: 0,
   top: "auto",
-  right: "7%",
+  right: "8%",
   bottom: "4.5%",
   left: "auto",
   position: "fixed",
@@ -42,7 +42,7 @@ function App() {
         <Link
           to={{ pathname: "/newTweet", state: { token: state.tokenReducer } }}
         >
-          <Fab variant="extended" style={style}>
+          <Fab draggable variant="extended" style={style}>
             <CreateOutlinedIcon />
             Compose
           </Fab>

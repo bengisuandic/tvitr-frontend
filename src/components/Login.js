@@ -1,10 +1,10 @@
 import React from "react";
 import axios from "axios";
-import { store } from "../app/store";
-import { useState} from "react";
+import { store } from "../Store/store";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setToken, setUser } from "../app/actions";
+import { setToken, setUser } from "../Store/actions";
 import {
   FormControl,
   InputLabel,
@@ -31,22 +31,24 @@ import "../styles/cards.css";
 async function handleSubmit(data, dispatch) {
   try {
     if (data.data !== "") {
-      console.log(data);
       return axios
         .post("http://localhost:3000/users/login", data)
         .then((res) => {
           console.log("Login Response:", res);
           const composeRes = res;
-          console.log(composeRes.data.token);
-          dispatch(setToken(composeRes.data.token));
-          dispatch(setUser(composeRes.data.user));
-          console.log("Store?", store.getState())
-        });
+          if (res.status === 200) {
+            //console.log(composeRes.data.token);
+            dispatch(setToken(composeRes.data.token));
+            dispatch(setUser(composeRes.data.user));
+            //console.log("Store?", store.getState());
+          }
+        })
+        .catch((error) => alert(error.response.data));
     } else {
       throw Error("Bruh");
     }
   } catch (error) {
-    console.log(error);
+    alert(error.response.data);
   }
 }
 
@@ -55,7 +57,15 @@ export default function Login() {
 
   var [username, setData] = useState("");
   var [password, setData1] = useState("");
-    
+
+  const [openAlert, setOpenAlert] = useState(false);
+  const handleOpenAlert = () => setOpenAlert(true);
+  const handleCloseAlert = () => {
+    setOpenAlert(false);
+  };
+
+  const alertMsg = "Nothing yet";
+
   return (
     <div style={{ margin: "5% 10% 5%" }}>
       <div>
@@ -74,7 +84,11 @@ export default function Login() {
         </div>
 
         <div style={{ margin: "5% 10% 5%" }} className="signin-form">
-          <FormControl style={{ width: "70%" }} className="signin-form" required>
+          <FormControl
+            style={{ width: "70%" }}
+            className="signin-form"
+            required
+          >
             <InputLabel htmlFor="my-password">Password</InputLabel>
             <Input
               id="my-password"
@@ -87,25 +101,31 @@ export default function Login() {
           </FormControl>
         </div>
       </div>
-      <div style={{ margin: "10px" }} >
+      <div style={{ margin: "10px" }}>
         {username !== "" ? (
-          <Button className="submit-button"
+          <Button
+            className="submit-button"
             onClick={() => {
-              handleSubmit({ username, password }, dispatch);
+              handleSubmit({ username, password }, dispatch, handleOpenAlert);
             }}
             variant="contained"
           >
             Login
           </Button>
         ) : (
-          <p style={{ color: "rgb(255, 57, 43, 0.72)" }}>
-          </p>
+          <p style={{ color: "rgb(255, 57, 43, 0.72)" }}></p>
         )}
       </div>
       <Link to={"/signUp"}>
         {" "}
         <Button> Don't have an account? Sign up!</Button>
       </Link>
+      {/* <Stack spacing={2}>
+        <Alert severity="error" open={openAlert} onClose={handleCloseAlert}>
+          <AlertTitle> Error </AlertTitle>
+          {alertMsg}
+        </Alert>
+      </Stack> */}
     </div>
   );
 }

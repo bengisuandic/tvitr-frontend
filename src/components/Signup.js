@@ -23,7 +23,6 @@ const style = {
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
-  display: "flex",
   flexDirection: "column",
   alignContent: "center",
   p: 4,
@@ -31,17 +30,23 @@ const style = {
 
 async function handleSubmit(data, handleOpen) {
   try {
-    if (data.data !== "") {
-      console.log(data);
+    if (
+      data.username !== "" &&
+      data.name !== "" &&
+      data.age !== "" &&
+      data.password !== ""
+    ) {
+      console.log("Signup body:", data);
       return axios
         .post("http://localhost:3000/users/signup", data)
         .then((res) => {
           const signupRes = res;
           console.log("SignUp Response:", signupRes);
           handleOpen();
-        });
+        })
+        .catch((error) => alert(error.response.data));
     } else {
-      throw Error("Bruh");
+      alert("Check empty places")
     }
   } catch (error) {
     console.log(error);
@@ -53,6 +58,13 @@ export default function Login() {
   var [password, setDataP] = useState("");
   var [name, setDataN] = useState("");
   var [age, setDataA] = useState("");
+
+  // const signUpBody= {
+  //   username: "",
+  //   name: "",
+  //   password: "",
+  //   age: ""
+  // };
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -119,7 +131,7 @@ export default function Login() {
         </div>
       </div>
       <div style={{ margin: "10%" }}>
-        {username !== "" ? (
+        {username !== "" && name !== "" && password !== "" && age !== "" ? (
           <Button
             onClick={() => {
               handleSubmit({ username, password, name, age }, handleOpen);
@@ -130,7 +142,7 @@ export default function Login() {
           </Button>
         ) : (
           <p style={{ color: "rgb(255, 57, 43, 0.72)" }}>
-            Please write something..
+            Please fill each space.
           </p>
         )}
       </div>

@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { Button } from "@mui/material";
-import { freeToken, freeUser } from "../app/actions";
+import { freeToken, freeUser } from "../Store/actions";
 
 function handleLogout(dispatch) {
   dispatch(freeToken());

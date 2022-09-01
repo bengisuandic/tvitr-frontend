@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import TweetList from "./TweetList";
 import Logout from "./Logout";
+import { getSingleUser } from "../API/api";
 
 export default class MyUser extends React.Component {
   state = {
@@ -10,19 +11,12 @@ export default class MyUser extends React.Component {
     },
   };
 
-  
-  componentDidMount() {
-    try {
-      axios.get("http://localhost:3000/users/singleUser/" + this.props.userId).then((res) => {
-        const user = res.data;
-        console.log("Profile:", user)
-        this.setState({ user });
-      });
-    } catch (error) {
-      console.log(error);
-    }
+  async componentDidMount() {
+    console.log(this.props);
+    const user = await getSingleUser(this.props.userId);
+    this.setState({ user });
   }
-  
+
   render() {
     return (
       <div>
@@ -34,11 +28,12 @@ export default class MyUser extends React.Component {
               userId={this.state.user._id}
               token={this.props.token}
               inUserProfile="1"
-              inMyProfile="1" />
+              inMyProfile="1"
+            />
           </>
         ) : (
           <p>You have no tweets yet</p>
-          )}
+        )}
         <Logout />
       </div>
     );

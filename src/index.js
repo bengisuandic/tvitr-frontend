@@ -2,7 +2,7 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Provider, useSelector } from "react-redux";
-import { store } from "./app/store";
+import { store } from "./Store/store";
 import App from "./App";
 import "./styles/index.css";
 

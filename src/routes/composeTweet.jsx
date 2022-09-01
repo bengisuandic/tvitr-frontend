@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { useState } from "react";
-import { store } from "../app/store";
+import { store } from "../Store/store";
 import { Link } from "react-router-dom";
 import {
   FormControl,
@@ -25,7 +25,6 @@ const style = {
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
-  display: "flex",
   flexDirection: "column",
   alignContent: "center",
   p: 4,
@@ -42,13 +41,13 @@ async function handleSubmit(data, token, resp) {
         })
         .then((res) => {
           const composeRes = res;
-          console.log("handlesubmit", data);
+          //console.log("handlesubmit", data);
           console.log("Compose Response:", res);
           if(res.status === 200){
             resp = 1;
             return resp = 1;
           }
-          console.log(resp);
+          //console.log(resp);
         });
     } else {
       throw Error("Cannot be empty");
@@ -91,7 +90,7 @@ export default function NewTweet() {
           <Button
             onClick={async () => {
               resp = await handleSubmit({ data }, state.tokenReducer, resp);
-              console.log(resp);
+              //console.log(resp);
               if(resp !== 0){ handleOpen();}
             }}
             variant="contained"

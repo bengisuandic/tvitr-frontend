@@ -8,7 +8,7 @@ export default function User() {
   const state = useSelector((state) => state);
   const myUser = state.userReducer;
   const myToken = state.tokenReducer;
-  console.log("MYUser:", myUser);
+  //console.log("MYUser:", myUser);
 
   return (
     <main style={{ padding: "1rem 0" }}>
